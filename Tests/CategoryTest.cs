@@ -86,7 +86,7 @@ namespace ToDoList
             Category testCategory = new Category("Household chores");
             testCategory.Save();
 
-            Task firstTask = new Task("Mow the lawn", testCategory.GetId(), "05/15/2020");
+            Task firstTask = new Task("Mow the lawn", testCategory.GetId(), "06/15/2020");
             firstTask.Save();
             Task secondTask = new Task("Do the dishes", testCategory.GetId(), "05/15/2020");
             secondTask.Save();
@@ -100,7 +100,7 @@ namespace ToDoList
 
         public void Dispose()
         {
-            // Task.DeleteAll();
+            Task.DeleteAll();
             Category.DeleteAll();
         }
     }

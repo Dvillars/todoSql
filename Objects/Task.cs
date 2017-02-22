@@ -31,7 +31,8 @@ namespace ToDoList
                 bool idEquality = this.GetId() == newTask.GetId();
                 bool descriptionEquality = this.GetDescription() == newTask.GetDescription();
                 bool categoryEquality = this.GetCategoryId() == newTask.GetCategoryId();
-                return (idEquality && descriptionEquality && categoryEquality);
+                bool dateEquality = this.GetCompleteBy() == newTask.GetCompleteBy();
+                return (idEquality && descriptionEquality && categoryEquality && dateEquality);
             }
         }
 
@@ -72,7 +73,7 @@ namespace ToDoList
             SqlConnection conn = DB.Connection();
             conn.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT * FROM tasks;", conn);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM tasks ORDER BY complete_by;", conn);
             SqlDataReader rdr = cmd.ExecuteReader();
 
             while(rdr.Read())
@@ -80,7 +81,7 @@ namespace ToDoList
                 int taskId = rdr.GetInt32(0);
                 string taskDescription = rdr.GetString(1);
                 int taskCategoryId = rdr.GetInt32(2);
-                string taskCompleteBy = rdr.GetString(3);
+                string taskCompleteBy = rdr.GetDateTime(3).ToString("MM/dd/yyyy");
                 Task newTask = new Task(taskDescription, taskCategoryId, taskCompleteBy, taskId);
                 AllTasks.Add(newTask);
             }
@@ -155,7 +156,7 @@ namespace ToDoList
                 foundTaskId = rdr.GetInt32(0);
                 foundTaskDescription = rdr.GetString(1);
                 foundTaskCategoryId = rdr.GetInt32(2);
-                foundCompleteBy = rdr.GetString(3);
+                foundCompleteBy = rdr.GetDateTime(3).ToString("MM/dd/yyy");
             }
             Task foundTask = new Task(foundTaskDescription, foundTaskCategoryId, foundCompleteBy, foundTaskId);
 

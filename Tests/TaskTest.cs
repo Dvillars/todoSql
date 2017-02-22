@@ -27,11 +27,14 @@ namespace ToDoList
         public void Test_EqualOverrideTrueForSameDescription()
         {
             //Arrange, Act
-            Task firstTask = new Task("Mow the lawn", 1, "05/15/2020");
-            Task secondTask = new Task("Mow the lawn", 1, "05/15/2020");
+            Task firstTask = new Task("Mow the lawn", 1, "04/22/2017");
+            Task secondTask = new Task("Mow the lawn", 1, "04/22/2017");
+
+            firstTask.Save();
+            secondTask.Save();
 
             //Assert
-            Assert.Equal(firstTask, secondTask);
+            Assert.NotEqual(firstTask, secondTask);
         }
 
         [Fact]
@@ -53,7 +56,8 @@ namespace ToDoList
         public void Test_SaveAssignsIdToObject()
         {
             //Arrange
-            Task testTask = new Task("Mow the lawn", 1, "05/15/2020");
+            Task testTask = new Task("Mow the carpet", 1, "05/10/2210");
+
             testTask.Save();
 
             //Act
@@ -70,7 +74,7 @@ namespace ToDoList
         public void Test_FindFindsTaskInDatabase()
         {
             //Arrange
-            Task testTask = new Task("Mow the lawn", 1, "05/15/2020");
+            Task testTask = new Task("Mow the lawn", 1, "10/01/2018");
             testTask.Save();
 
             //Act
@@ -84,7 +88,7 @@ namespace ToDoList
         public void Test_SaveCompleteBy()
         {
             //Arrange
-            Task testTask = new Task("Mow the lawn", 1, "05/15/2020");
+            Task testTask = new Task("Mow the lawn", 1, "09/29/2020");
             testTask.Save();
 
             //Act
@@ -98,6 +102,7 @@ namespace ToDoList
         public void Dispose()
         {
             Task.DeleteAll();
+            Category.DeleteAll();
         }
     }
 }
